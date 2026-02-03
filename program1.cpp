@@ -122,24 +122,31 @@ void printHeader(int subjects){
 
     cout << string(100, '-') << endl;
 }
-int linearsearch(vector<result>& students, const string name){
-        for(int i = 0; i < students.size(); i++){
-            if(students[i].name == name){
+int binarysearch(vector<result>& students, const string &key){
+       int st = 0; int end = students.size() - 1;
+         while(st <= end){
+
+              int mid = (st + end) / 2;
+              if(students[mid].name == key){
                 cout << "Student found:\n";
-                printHeader(students[i].n);
-                students[i].display();
-                return i;
-            }
-        }
-        return -1;  
+                printHeader(students[mid].n);
+                students[mid].display();
+                return mid;
+              }
+              else if(students[mid].name < key){
+                st = mid + 1;
+              }
+              else{
+                end = mid - 1;
+              }
+         }
     }
 
-
-void sort(vector<result> &students) {
+    void sort(vector<result> &students) {
       int n = students.size();
       for(int i = 0;i<n-1;i++){
           for(int j = 0;j<n-i-1;j++){
-              if(students[j].rollno > students[j+1].rollno){
+              if(students[j].name > students[j+1].name){
                   swap(students[j], students[j+1]);
               }
           }
@@ -221,16 +228,16 @@ int main(){
 
    case 3:
        {
-        string r;
+        string key;
         cout << "Enter name to search: ";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        getline(cin, r);
+        getline(cin, key);
 
         if(students.empty()){
             cout << "No student data available!\n";
         }
         else{
-            int index = linearsearch(students, r);
+            int index = binarysearch(students, r);
             if(index == -1){
                 cout << "Student with name " << r << " not found.\n";
             }
