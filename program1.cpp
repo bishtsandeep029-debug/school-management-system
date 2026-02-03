@@ -53,7 +53,7 @@ public:
 
 class result : public student {
 public:
-    float percentage;
+    double percentage;
     int total;
     bool ispass;
 
