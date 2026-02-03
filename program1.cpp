@@ -122,6 +122,29 @@ void printHeader(int subjects){
 
     cout << string(100, '-') << endl;
 }
+int linearsearch(vector<result>& students, const string name){
+        for(int i = 0; i < students.size(); i++){
+            if(students[i].name == name){
+                cout << "Student found:\n";
+                printHeader(students[i].n);
+                students[i].display();
+                return i;
+            }
+        }
+        return -1;  
+    }
+
+
+void sort(vector<result> &students) {
+      int n = students.size();
+      for(int i = 0;i<n-1;i++){
+          for(int j = 0;j<n-i-1;j++){
+              if(students[j].rollno > students[j+1].rollno){
+                  swap(students[j], students[j+1]);
+              }
+          }
+      }
+}
 
 int main(){
     vector<result> students;
@@ -146,7 +169,8 @@ int main(){
         cout << "\n--- Student Management System ---\n";
         cout << "1. Add Students\n";
         cout << "2. Display Students\n";
-        cout << "3. Exit\n";
+        cout << "3. search student by name\n";
+        cout << "4. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -184,6 +208,7 @@ int main(){
     } else {
 
         printHeader(students[0].n);
+        sort(students);
 
         for (auto &s : students) {
             s.display();
@@ -194,7 +219,26 @@ int main(){
     break;
 }
 
-    case 3:
+   case 3:
+       {
+        string r;
+        cout << "Enter name to search: ";
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        getline(cin, r);
+
+        if(students.empty()){
+            cout << "No student data available!\n";
+        }
+        else{
+            int index = linearsearch(students, r);
+            if(index == -1){
+                cout << "Student with name " << r << " not found.\n";
+            }
+        }
+        break;
+      }
+    
+    case 4:
         cout << "Exiting program...\n";
         break;
 
@@ -202,7 +246,7 @@ int main(){
         cout << "Invalid choice. Try again.\n";
     }
 
-   } while (choice != 3);
+   } while (choice != 4);
 
     return 0;
  }
