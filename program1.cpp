@@ -237,7 +237,7 @@ int main(){
             cout << "No student data available!\n";
         }
         else{
-            int index = binarysearch(students, r);
+            int index = binarysearch(students, key);
             if(index == -1){
                 cout << "Student with name " << r << " not found.\n";
             }
